@@ -1,5 +1,8 @@
-public class InvoiceGenerator {
+import java.util.ArrayList;
+import java.util.List;
 
+public class InvoiceGenerator {
+    //List<Rides> rides = new ArrayList<>();
     int costPerKm = 10;
     int costPerMin = 1;
     int minFare = 5;
@@ -12,5 +15,14 @@ public class InvoiceGenerator {
         } else {
             return totalFare;
         }
+    }
+
+    public double multipleFare(Rides[] rides) {
+        double totalFare = 0.0;
+        for (Rides ride : rides) {
+            totalFare = totalFare + fareCalculation(ride.distance, ride.time);
+        }
+        System.out.print("Total Fare is: ");
+        return totalFare;
     }
 }

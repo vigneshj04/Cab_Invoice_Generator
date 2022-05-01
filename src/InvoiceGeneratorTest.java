@@ -34,4 +34,69 @@ class InvoiceGeneratorTest {
         InvoiceSummary expectedInvoice = new InvoiceSummary(3, 140.0);
         Assert.assertEquals(expectedInvoice, summary);
     }
+
+    @Test
+    public void givenUserId_ShouldReturnInvoiceSummary() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        InvoiceSummary summary = invoice.getInvoice(1);
+        InvoiceSummary expectedInvoices = new InvoiceSummary(2, 66);
+        Assert.assertEquals(expectedInvoices, summary);
+    }
+
+    @Test
+    void givenDistanceAndTime_WhenNormal_ShouldReturnTotalFare() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        double actual = invoice.calculateFare(6, 4, "Normal");
+        Assert.assertEquals(64, actual, 0);
+    }
+
+    @Test
+    void givenMultipleRides_WhenNormal_ShouldReturnTotalFare() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        Rides[] rides = {new Rides(4, 5),
+                new Rides(3, 7),
+        };
+        double actual = invoice.calculateFareMultipleRides(rides, "Normal");
+        Assert.assertEquals(82, actual, 0);
+    }
+
+    @Test
+    void givenMultipleRides_WhenNormal_ShouldReturnInvoiceSummary() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        Rides[] rides = {new Rides(4.0, 5),
+                new Rides(3, 7),
+                new Rides(5, 8)
+        };
+        InvoiceSummary summary = invoice.invoiceSummaryType(rides, "Normal");
+        InvoiceSummary expectedInvoice = new InvoiceSummary(3, 140.0);
+        Assert.assertEquals(expectedInvoice, summary);
+    }
+
+    @Test
+    void givenDistanceAndTime_WhenPremium_ShouldReturnTotalFare() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        double actual = invoice.calculateFare(7, 2, "Premium");
+        Assert.assertEquals(109, actual, 0);
+    }
+
+    @Test
+    void givenMultipleRides_WhenPremium_ShouldReturnTotalFare() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        Rides[] rides = {new Rides(4, 5),
+                new Rides(3, 7),
+        };
+        double actual = invoice.calculateFareMultipleRides(rides, "Premium");
+        Assert.assertEquals(129, actual, 0);
+    }
+
+    @Test
+    void givenMultipleRides_WhenPremium_ShouldReturnInvoiceSummary() {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        Rides[] rides = {new Rides(4, 5),
+                new Rides(3, 7),
+        };
+        InvoiceSummary summary = invoice.invoiceSummaryType(rides, "Premium");
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 129.0);
+        Assert.assertEquals(expectedInvoice, summary);
+    }
 }
